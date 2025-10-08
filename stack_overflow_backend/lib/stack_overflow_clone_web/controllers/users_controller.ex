@@ -100,9 +100,7 @@ defmodule StackOverflowCloneWeb.UsersController do
 
         case Accounts.delete_user(user) do
           {:ok, _user} ->
-            conn
-            |> put_status(:no_content)
-            |> json(%{})
+            send_resp(conn, :no_content, "")
 
           {:error, changeset} ->
             conn

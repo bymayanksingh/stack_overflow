@@ -65,12 +65,14 @@ defmodule StackOverflowCloneWeb.QuestionsController do
   end
 
   @doc """
-  Get a specific question by ID.
+  Get a specific question by ID with optional AI reranking.
 
-  GET /api/questions/:id
+  GET /api/questions/:id?rerank=true
   """
-  def show(conn, %{"id" => question_id}) do
-    case StackOverflowService.get_question(question_id) do
+  def show(conn, %{"id" => question_id} = params) do
+    rerank = Map.get(params, "rerank", "false") == "true"
+
+    case StackOverflowService.get_question(question_id, rerank) do
       {:ok, question} ->
         conn
         |> put_status(:ok)

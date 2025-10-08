@@ -19,7 +19,7 @@ config :stack_overflow_clone,
 # Configures the endpoint
 config :stack_overflow_clone, StackOverflowCloneWeb.Endpoint,
   url: [host: "localhost"],
-  adapter: Bandit.PhoenixAdapter,
+  adapter: Phoenix.Endpoint.Cowboy2Adapter,
   render_errors: [
     formats: [json: StackOverflowCloneWeb.ErrorJSON],
     layout: false

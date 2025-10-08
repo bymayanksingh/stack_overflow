@@ -80,20 +80,39 @@ Stack Overflow clone built with Elixir/Phoenix backend and React frontend, featu
    ```
 
 2. **Set up environment variables**:
+   
+   Create a `.env` file in the root directory:
    ```bash
-   cp stack_overflow_backend/env.example .env
-   # Edit .env and add your GEMINI_API_KEY
+   # Create .env file
+   cat > .env << EOF
+   # Google Gemini API Key (required for AI answer reranking)
+   # Get your API key from: https://aistudio.google.com/app/apikey
+   GEMINI_API_KEY=your_actual_gemini_api_key_here
+   EOF
    ```
+   
+   **Important**: Replace `your_actual_gemini_api_key_here` with your actual Gemini API key.
+   
+   To get a Gemini API key:
+   - Visit https://aistudio.google.com/app/apikey
+   - Sign in with your Google account
+   - Click "Create API Key"
+   - Copy the generated key and paste it in your `.env` file
 
 3. **Start all services**:
    ```bash
-   docker-compose up
+   docker-compose up --build
    ```
 
 4. **Access the application**:
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:4000
    - Database: localhost:5432
+
+5. **Stop services**:
+   ```bash
+   docker-compose down
+   ```
 
 ### Option 2: Manual Setup
 
@@ -220,12 +239,24 @@ GET /api/questions/recent-searches?user_id=1
 
 ### Environment Variables
 
-#### Backend (.env)
+#### Root Directory (.env) - For Docker Compose
+Create a `.env` file in the project root directory:
+```bash
+# Google Gemini API Key (required for AI answer reranking)
+# Get your API key from: https://aistudio.google.com/app/apikey
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+```
+
+**Note**: The `.env` file is automatically excluded from version control via `.gitignore`. Never commit your API keys!
+
+#### Backend (.env) - For Manual Setup
+If running the backend manually (without Docker), create `.env` in `stack_overflow_backend/`:
 ```bash
 GEMINI_API_KEY=your-gemini-api-key-here
 ```
 
-#### Frontend (.env)
+#### Frontend (.env) - For Manual Setup
+If running the frontend manually (without Docker), create `.env` in `stack_overflow_frontend/`:
 ```bash
 REACT_APP_API_URL=http://localhost:4000/api
 ```
@@ -286,6 +317,30 @@ docker-compose down
 - Verify environment variables
 - Test API endpoints manually (using postman collection as shared in the backend directory)
 - Check browser console for frontend errors
+
+## Security Best Practices
+
+### API Key Management
+
+1. **Never commit API keys** to version control
+   - The `.env` file is automatically ignored by `.gitignore`
+   - Use environment variables for all sensitive data
+
+2. **For Docker deployments**:
+   - Create a `.env` file in the project root
+   - Docker Compose automatically loads variables from `.env`
+   - Example: `GEMINI_API_KEY=your_key_here`
+
+3. **For production deployments**:
+   - Use secure environment variable management (AWS Secrets Manager, etc.)
+   - Rotate API keys periodically
+   - Monitor API usage for anomalies
+
+4. **Getting a Gemini API Key**:
+   - Visit: https://aistudio.google.com/app/apikey
+   - Sign in with Google account
+   - Create and copy your API key
+   - Add it to your `.env` file
 
 ## Future Enhancements
 

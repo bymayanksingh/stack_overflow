@@ -1,11 +1,12 @@
-FROM elixir:1.16-alpine
+FROM elixir:1.17
 
 # Install system dependencies
-RUN apk add --no-cache \
-    build-base \
+RUN apt-get update && apt-get install -y \
+    build-essential \
     inotify-tools \
     postgresql-client \
-    git
+    git \
+    && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /app

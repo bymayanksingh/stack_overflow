@@ -54,9 +54,9 @@ defmodule StackOverflowClone.Services.StackOverflowService do
   end
 
   @doc """
-  Get a specific question by ID with its answers.
+  Get a specific question by ID with its answers, optionally reranked by AI.
   """
-  def get_question(question_id, opts \\ []) do
+  def get_question(question_id, rerank \\ false) do
     # Ensure we treat id as integer for cache keys
     question_id =
       case question_id do
@@ -64,17 +64,35 @@ defmodule StackOverflowClone.Services.StackOverflowService do
         id when is_binary(id) -> String.to_integer(id)
       end
 
-    case StackOverflowApi.get_question(question_id, opts) do
+    case StackOverflowApi.get_question(question_id, []) do
       {:ok, question} ->
         # keep cache updated on successful fetch
         CacheService.put_questions([question])
-        {:ok, question}
+
+        # Apply AI reranking if requested
+        final_question =
+          if rerank do
+            rerank_question_answers(question)
+          else
+            question
+          end
+
+        {:ok, final_question}
 
       {:error, _reason} ->
         # fallback to cache on errors (e.g., 429 or 400)
         case CacheService.get_question(question_id) do
           nil -> {:error, "Question not available"}
-          question -> {:ok, question}
+          question ->
+            # Apply AI reranking if requested
+            final_question =
+              if rerank do
+                rerank_question_answers(question)
+              else
+                question
+              end
+
+            {:ok, final_question}
         end
     end
   end
