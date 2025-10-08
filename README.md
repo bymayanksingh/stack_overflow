@@ -275,7 +275,7 @@ config :stack_overflow_clone, StackOverflowClone.Repo,
   database: "stack_overflow_clone_dev"
 ```
 
-## 🧪 Testing
+## Testing
 
 ### Backend Tests
 ```bash
