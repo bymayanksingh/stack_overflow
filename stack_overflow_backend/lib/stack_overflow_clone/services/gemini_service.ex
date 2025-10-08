@@ -13,24 +13,35 @@ defmodule StackOverflowClone.Services.GeminiService do
     model = Keyword.get(opts, :model, "gemini-2.0-flash")
     max_tokens = Keyword.get(opts, :max_tokens, 1000)
 
+    Logger.info("🔄 GEMINI RERANKING: Starting rerank for question #{question["question_id"]} with #{length(answers)} answers")
+    Logger.info("🔄 GEMINI RERANKING: Question title: #{question["title"]}")
+    Logger.info("🔄 GEMINI RERANKING: Using model: #{model}, max_tokens: #{max_tokens}")
+
     prompt = build_reranking_prompt(question, answers)
 
+    Logger.info("🔄 GEMINI API CALL: Making request to Gemini API...")
     case Gemini.generate(prompt, model: model, max_tokens: max_tokens, temperature: 0.1) do
       {:ok, response} ->
+        Logger.info("✅ GEMINI API SUCCESS: Received response from Gemini API")
         case Gemini.extract_text(response) do
           {:ok, text} ->
+            Logger.info("✅ GEMINI TEXT EXTRACTION: Successfully extracted text from response")
             case parse_reranking_response(text, answers) do
-              {:ok, reranked_answers} -> {:ok, reranked_answers}
-              {:error, reason} -> {:error, reason}
+              {:ok, reranked_answers} ->
+                Logger.info("✅ GEMINI RERANKING SUCCESS: Successfully reranked #{length(reranked_answers)} answers")
+                {:ok, reranked_answers}
+              {:error, reason} ->
+                Logger.error("❌ GEMINI PARSING ERROR: Failed to parse reranking response: #{inspect(reason)}")
+                {:error, reason}
             end
 
           {:error, reason} ->
-            Logger.error("Gemini API error extracting text: #{inspect(reason)}")
+            Logger.error("❌ GEMINI TEXT EXTRACTION ERROR: #{inspect(reason)}")
             {:error, reason}
         end
 
       {:error, reason} ->
-        Logger.error("Gemini API error: #{inspect(reason)}")
+        Logger.error("❌ GEMINI API ERROR: #{inspect(reason)}")
         {:error, reason}
     end
   end

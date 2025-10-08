@@ -41,15 +41,22 @@ defmodule StackOverflowClone.Services.StackOverflowService do
   Search for questions and rerank answers using GEMINI.
   """
   def search_and_rerank_questions(query, user_id \\ nil, opts \\ []) do
+    Logger.info("🔍 SEARCH_AND_RERANK: Starting search_and_rerank_questions for query: '#{query}', user_id: #{user_id}")
+
     with {:ok, questions_with_answers} <- search_questions(query, user_id, opts) do
+      Logger.info("🔍 SEARCH_AND_RERANK: Found #{length(questions_with_answers)} questions, starting reranking...")
+
       reranked_questions =
         questions_with_answers
         |> Enum.map(&rerank_question_answers/1)
         |> Enum.filter(& &1)
 
+      Logger.info("🔍 SEARCH_AND_RERANK: Completed reranking, returning #{length(reranked_questions)} questions")
       {:ok, reranked_questions}
     else
-      {:error, reason} -> {:error, reason}
+      {:error, reason} ->
+        Logger.error("❌ SEARCH_AND_RERANK ERROR: #{inspect(reason)}")
+        {:error, reason}
     end
   end
 
@@ -120,20 +127,24 @@ defmodule StackOverflowClone.Services.StackOverflowService do
 
   defp rerank_question_answers(question) do
     answers = question["answers"] || []
+    Logger.info("🔄 RERANK_QUESTION: Processing question #{question["question_id"]} with #{length(answers)} answers")
 
     if length(answers) > 1 do
+      Logger.info("🔄 RERANK_QUESTION: Calling GeminiService.rerank_answers for question #{question["question_id"]}")
       case GeminiService.rerank_answers(question, answers) do
         {:ok, reranked_answers} ->
+          Logger.info("✅ RERANK_QUESTION: Successfully reranked answers for question #{question["question_id"]}")
           Map.put(question, "reranked_answers", reranked_answers)
 
         {:error, reason} ->
           Logger.warning(
-            "Failed to rerank answers for question #{question["question_id"]}: #{inspect(reason)}"
+            "❌ RERANK_QUESTION: Failed to rerank answers for question #{question["question_id"]}: #{inspect(reason)}"
           )
 
           question
       end
     else
+      Logger.info("⏭️ RERANK_QUESTION: Skipping rerank for question #{question["question_id"]} (only #{length(answers)} answers)")
       question
     end
   end

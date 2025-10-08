@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Stack Overflow Clone API",
-    "description": "API collection for testing the Stack Overflow Clone backend. Make sure to set up your .env file with GEMINI_API_KEY for reranking functionality.",
+    "description": "API collection for testing the Stack Overflow Clone backend with Gemini AI reranking functionality.\n\n**Setup Requirements:**\n- Set up your .env file with GEMINI_API_KEY for reranking functionality\n- Start the Phoenix server: `mix phx.server`\n- Base URL: http://localhost:4000\n\n**Testing Gemini Integration:**\n- Use the 'Gemini AI Reranking Tests' folder for comprehensive reranking tests\n- Check server logs for Gemini API call indicators (🔄 GEMINI API CALL, ✅ GEMINI API SUCCESS)\n- Look for 'reranked_answers' field in responses to confirm reranking worked\n- Reranking only occurs when questions have 2+ answers",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -110,7 +110,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{base_url}}/api/questions/search?q=elixir&user_id=1",
+              "raw": "{{base_url}}/api/questions/search?q=elixir&user_id=5",
               "host": ["{{base_url}}"],
               "path": ["api", "questions", "search"],
               "query": [
@@ -120,7 +120,7 @@
                 },
                 {
                   "key": "user_id",
-                  "value": "1"
+                  "value": "5"
                 }
               ]
             }
@@ -131,24 +131,77 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{base_url}}/api/questions/search?q=elixir&user_id=1&rerank=true",
+              "raw": "{{base_url}}/api/questions/search?q=javascript%20async%20await&user_id=5&rerank=true",
               "host": ["{{base_url}}"],
               "path": ["api", "questions", "search"],
               "query": [
                 {
                   "key": "q",
-                  "value": "elixir"
+                  "value": "javascript async await"
                 },
                 {
                   "key": "user_id",
-                  "value": "1"
+                  "value": "5"
                 },
                 {
                   "key": "rerank",
                   "value": "true"
                 }
               ]
-            }
+            },
+            "description": "Test the search_and_rerank_questions functionality. This will trigger Gemini API calls to rerank answers. Check server logs for Gemini API call indicators."
+          }
+        },
+        {
+          "name": "Search Questions (Reranking - Python)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=python%20list%20comprehension&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "python list comprehension"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with Python questions. Look for 'reranked_answers' field in response to confirm Gemini reranking worked."
+          }
+        },
+        {
+          "name": "Search Questions (Reranking - React)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=react%20hooks%20useeffect&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "react hooks useEffect"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with React questions. This should trigger Gemini API calls if questions have multiple answers."
           }
         },
         {
@@ -163,20 +216,196 @@
           }
         },
         {
+          "name": "Get Question by ID (With Reranking)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/12345?rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "12345"],
+              "query": [
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Get a specific question with AI reranking applied to its answers. Look for 'reranked_answers' field in response."
+          }
+        },
+        {
           "name": "Get Recent Searches",
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{base_url}}/api/questions/recent-searches?user_id=1",
+              "raw": "{{base_url}}/api/questions/recent-searches?user_id=5",
               "host": ["{{base_url}}"],
               "path": ["api", "questions", "recent-searches"],
               "query": [
                 {
                   "key": "user_id",
-                  "value": "1"
+                  "value": "5"
                 }
               ]
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gemini AI Reranking Tests",
+      "description": "Test cases specifically designed to verify Gemini AI reranking functionality. These tests will trigger Gemini API calls and should show detailed logs in the server console.",
+      "item": [
+        {
+          "name": "Test Reranking - JavaScript Async",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=javascript%20async%20await%20promise&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "javascript async await promise"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with JavaScript async/await questions. This should trigger Gemini API calls. Check server logs for: 🔄 GEMINI API CALL, ✅ GEMINI API SUCCESS"
+          }
+        },
+        {
+          "name": "Test Reranking - Error Handling",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=very%20specific%20error%20handling%20javascript&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "very specific error handling javascript"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with error handling questions. Look for reranked_answers field in response."
+          }
+        },
+        {
+          "name": "Test Reranking - Performance",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=react%20performance%20optimization&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "react performance optimization"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with React performance questions. Monitor server logs for Gemini API call timing."
+          }
+        },
+        {
+          "name": "Test Reranking - Database Queries",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=sql%20join%20optimization&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sql join optimization"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with SQL/database questions. This should show how Gemini reranks technical database answers."
+          }
+        },
+        {
+          "name": "Test Error Handling - Missing Query",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test error handling when query parameter is missing. Should return 400 Bad Request."
+          }
+        },
+        {
+          "name": "Test Reranking - No Results",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=very%20obscure%20programming%20language%20xyz123&user_id=5&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "very obscure programming language xyz123"
+                },
+                {
+                  "key": "user_id",
+                  "value": "5"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            },
+            "description": "Test reranking with a query that should return no results. Should handle gracefully without Gemini API calls."
           }
         }
       ]
