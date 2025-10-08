@@ -370,3 +370,6 @@ docker-compose down
 ![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_00.png)
 ![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_14.png)
 ![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_27.png)
+
+### Rate Limitng Error (Stackoverflow API)
+![Rate Limiting](screenshots/screencapture-localhost-3000-2025-10-08-21_25_43.png)
