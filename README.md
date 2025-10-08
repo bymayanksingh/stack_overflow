@@ -1,15 +1,15 @@
 # Stack Overflow Clone - Full Stack Application
 
-A complete Stack Overflow clone built with Elixir/Phoenix backend and React frontend, featuring AI-powered answer reranking using Google Gemini API.
+Stack Overflow clone built with Elixir/Phoenix backend and React frontend, featuring AI-powered answer reranking using Google Gemini API.
 
-## 🚀 Features
+## Features
 
 ### Backend (Elixir/Phoenix)
 - **RESTful API** with comprehensive endpoints
 - **Stack Overflow API Integration** for real question data
 - **AI-Powered Reranking** using Google Gemini API
 - **User Management** with PostgreSQL
-- **Search History Caching** using ETS and database
+- **Search History Caching** using Eralng Term Storage (ETS)
 - **Error Handling** with proper HTTP status codes
 
 ### Frontend (React/TypeScript)
@@ -18,15 +18,13 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
 - **Real-time Search** with loading states
 - **AI Reranking Toggle** for enhanced results
 - **User Management** interface
-- **Recent Searches** functionality
-- **Responsive Design** for all devices
+- **Recent Searches** component to toggle between recent searches (via cache) & all searches (via database)
 
 ### AI Integration
 - **Google Gemini API** for answer reranking
-- **Intelligent Answer Prioritization** based on relevance
 - **Toggle Between Original and Reranked** results
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
@@ -47,7 +45,7 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
                        └─────────────────┘
 ```
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Elixir 1.15+** with Phoenix 1.8
@@ -65,7 +63,7 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
 - **Lucide React** for icons
 - **React Markdown** for content
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Elixir 1.15+ and Erlang/OTP 28+
@@ -83,7 +81,7 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
 
 2. **Set up environment variables**:
    ```bash
-   cp stack_overflow_clone/env.example .env
+   cp stack_overflow_backend/env.example .env
    # Edit .env and add your GEMINI_API_KEY
    ```
 
@@ -103,7 +101,7 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
 
 1. **Navigate to backend directory**:
    ```bash
-   cd stack_overflow_clone
+   cd stack_overflow_backend
    ```
 
 2. **Install dependencies**:
@@ -218,7 +216,7 @@ GET /api/questions/recent-searches?user_id=1
 - View user list
 - Delete users
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -250,7 +248,7 @@ cd stack_overflow_clone
 mix test
 ```
 
-## 📦 Deployment
+## Deployment
 
 ### Docker Deployment
 ```bash
