@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Markdown/code rendering fixes */
+@layer utilities {
+  /* Ensure code blocks don't overflow their containers */
+  .prose pre {
+    overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Make inline code wrap nicely in narrow layouts */
+  .prose code:not(pre code) {
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  /* Keep block code formatting while allowing horizontal scroll */
+  .prose pre code {
+    white-space: pre;
+    word-break: normal;
+    overflow-x: auto;
+    display: block;
+  }
+
+  /* Prevent long URLs inside markdown from breaking layout */
+  .prose a {
+    word-break: break-word;
+  }
+
+  /* Fallback: if code blocks are rendered without <pre>, still prevent overflow */
+  .prose > code {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
