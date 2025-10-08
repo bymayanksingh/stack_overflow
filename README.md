@@ -2,6 +2,10 @@
 
 Stack Overflow clone built with Elixir/Phoenix backend and React frontend, featuring AI-powered answer reranking using Google Gemini API.
 
+> **⚠️ NOTE:**  
+> To use the product effectively, consider creating a user first using the **User Management** page.  
+> For a better understanding, refer to the screenshots below.
+
 ## Features
 
 ### Backend (Elixir/Phoenix)
@@ -350,3 +354,19 @@ docker-compose down
 - [ ] Mobile app support
 - [ ] Performance optimizations
 - [ ] Advanced AI features
+
+## Screenshots
+
+### Homepage
+![Homepage](screenshots/screencapture-localhost-3000-2025-10-08-19_44_01.png)
+![Homepage](screenshots/screencapture-localhost-3000-2025-10-08-19_44_44.png)
+![Homepage](screenshots/screencapture-localhost-3000-2025-10-08-19_45_23.png)
+
+### Question Page
+![Question Page](screenshots/screencapture-localhost-3000-question-18011784-2025-10-08-19_45_41.png)
+![Question Page](screenshots/screencapture-localhost-3000-question-18011784-2025-10-08-19_46_04.png)
+
+### User Management
+![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_00.png)
+![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_14.png)
+![User Management](screenshots/screencapture-localhost-3000-user-2025-10-08-19_40_27.png)
