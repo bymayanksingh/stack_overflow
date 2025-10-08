@@ -150,7 +150,7 @@ A complete Stack Overflow clone built with Elixir/Phoenix backend and React fron
    npm start
    ```
 
-## 📚 API Documentation
+## API Documentation
 
 ### User Management
 
@@ -199,25 +199,24 @@ GET /api/questions/:id
 GET /api/questions/recent-searches?user_id=1
 ```
 
-## 🎨 Frontend Features
+## Frontend Features
 
 ### Search Interface
 - Clean, Stack Overflow-inspired design
 - Real-time search with loading states
 - AI reranking toggle
-- Recent searches sidebar
+- Recent searches component
 
 ### Question Display
-- Beautiful question cards
-- Answer previews with vote counts
+- Dedicated question cards
+- Answer previews with vote counts (fetched from stack overflow)
 - Toggle between original and reranked answers
-- Markdown rendering for rich content
+- Markdown / HTML / Rich Content rendering.
 
 ### User Management
 - Create new users
 - View user list
 - Delete users
-- User profile display
 
 ## 🔧 Configuration
 
@@ -251,12 +250,6 @@ cd stack_overflow_clone
 mix test
 ```
 
-### Frontend Tests
-```bash
-cd stack_overflow_frontend
-npm test
-```
-
 ## 📦 Deployment
 
 ### Docker Deployment
@@ -271,26 +264,7 @@ docker-compose logs -f
 docker-compose down
 ```
 
-### Production Considerations
-- Set up proper environment variables
-- Configure database for production
-- Set up reverse proxy (nginx)
-- Enable SSL/TLS
-- Configure monitoring and logging
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit a pull request
-
-## 📄 License
-
-This project is a demonstration of a Stack Overflow clone for educational purposes.
-
-## 🆘 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -312,18 +286,14 @@ This project is a demonstration of a Stack Overflow clone for educational purpos
 ### Getting Help
 - Check the logs: `docker-compose logs`
 - Verify environment variables
-- Test API endpoints manually
+- Test API endpoints manually (using postman collection as shared in the backend directory)
 - Check browser console for frontend errors
 
-## 🎯 Future Enhancements
+## Future Enhancements
 
 - [ ] User authentication and authorization
-- [ ] Real-time notifications
 - [ ] Advanced search filters
-- [ ] Question and answer voting
-- [ ] User profiles and reputation
 - [ ] Tag-based organization
 - [ ] Mobile app support
 - [ ] Performance optimizations
 - [ ] Advanced AI features
-- [ ] Analytics and monitoring
