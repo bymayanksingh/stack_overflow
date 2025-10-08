@@ -1,0 +1,191 @@
+{
+  "info": {
+    "name": "Stack Overflow Clone API",
+    "description": "API collection for testing the Stack Overflow Clone backend. Make sure to set up your .env file with GEMINI_API_KEY for reranking functionality.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"email\": \"test@example.com\",\n    \"name\": \"Test User\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/users",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": {\n    \"name\": \"Updated Name\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{base_url}}/api/users/1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "users", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Question Search",
+      "item": [
+        {
+          "name": "Search Questions (Basic)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=elixir",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "elixir"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Questions (With User ID)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=elixir&user_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "elixir"
+                },
+                {
+                  "key": "user_id",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Questions (With Reranking)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/search?q=elixir&user_id=1&rerank=true",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "search"],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "elixir"
+                },
+                {
+                  "key": "user_id",
+                  "value": "1"
+                },
+                {
+                  "key": "rerank",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Question by ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/12345",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "12345"]
+            }
+          }
+        },
+        {
+          "name": "Get Recent Searches",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/api/questions/recent-searches?user_id=1",
+              "host": ["{{base_url}}"],
+              "path": ["api", "questions", "recent-searches"],
+              "query": [
+                {
+                  "key": "user_id",
+                  "value": "1"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:4000"
+    }
+  ]
+}
