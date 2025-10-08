@@ -9,7 +9,6 @@ A modern React frontend for the Stack Overflow clone application, built with Typ
 - **AI Reranking**: Toggle between original and AI-reranked answers
 - **User Management**: Create and manage users
 - **Recent Searches**: View and reuse recent search queries
-- **Responsive Design**: Mobile-friendly interface
 
 ## Tech Stack
 
