@@ -25,7 +25,7 @@ services:
       - "4000:4000"
     environment:
       - DATABASE_URL=ecto://postgres:postgres@postgres:5432/stack_overflow_clone_dev
-      - GEMINI_API_KEY=AIzaSyBCofKcJ5LDQ1wfEMf8vEDfSoZtcgiT4kY
+      - GEMINI_API_KEY=GEMINI_API_KEY
     depends_on:
       postgres:
         condition: service_healthy
